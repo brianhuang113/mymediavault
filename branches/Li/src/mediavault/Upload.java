@@ -51,6 +51,6 @@ public class Upload extends HttpServlet {
 
 		datastore.put(fileinfo);
 
-		res.sendRedirect("/");
+		res.sendRedirect("/listallfiles.jsp");
 	}
 }
