@@ -91,12 +91,9 @@ td {
 									<td>
 										<ul id="sddm">
 											<li><a href="/">Home</a></li>
-											<li><a href="#" onmouseover="mopen('m1')"
-												onmouseout="mclosetime()">File Upload</a>
-												<div id="m1" onmouseover="mcancelclosetime()"
-													onmouseout="mclosetime()">
-													<a href="imageupload.jsp" target="main">Image Upload</a> <a href="audioupload.jsp" target="main">Audio Upload</a>
-												</div>
+											<li>
+												<a href="fileupload.jsp" target="main">File Upload</a>
+												
 											</li>
 											<li><a href="#" onmouseover="mopen('m2')"
 												onmouseout="mclosetime()">File Listing</a>
