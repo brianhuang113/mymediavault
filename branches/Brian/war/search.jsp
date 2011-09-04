@@ -32,7 +32,7 @@
 			<th>Delete</th>
 		</tr>
 		<%
-			String searchName = request.
+		
 		
 		%>
 </table>
