@@ -31,6 +31,7 @@ public class Upload extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
+		res.setContentType("text/html");
 		PrintWriter out = res.getWriter();
 
 		try {
@@ -47,25 +48,33 @@ public class Upload extends HttpServlet {
 			BlobInfo blobinfo = blobinfofactory.loadBlobInfo(blobKey);
 			String content = blobinfo.getContentType();
 			content = content.substring(0, content.indexOf("/"));
-			if (content != "image" && content != "audio" && content != "text"
-					&& content != "video") {
+			if (!content.equals(new String("image")) && !(content.equals("audio"))
+					&& !(content.equals("text")) && !(content.equals("video"))) {
 				blobstoreService.delete(blobKey);
-				out.println("<html><body>Upload failed, invalid file type!</body></html>");
+				out.println("<html><body>Upload failed, invalid file type! "
+						+ content + "</body></html>");
+				out.flush();
+				out.close();
+			} else {
+				Entity fileinfo = new Entity("fileinfo", fileKey);
+				fileinfo.setProperty("blobkey", blobKey);
+				fileinfo.setProperty("date", blobinfo.getCreation());
+				fileinfo.setProperty("filename", blobinfo.getFilename());
+				fileinfo.setProperty("owner", user);
+				fileinfo.setProperty("size", blobinfo.getSize());
+				fileinfo.setProperty("contenttype", blobinfo.getContentType());
+
+				datastore.put(fileinfo);
+
+				out.println("<html><body>Upload successfully!</body></html>");
+				out.flush();
+				out.close();
 			}
-			Entity fileinfo = new Entity("fileinfo", fileKey);
-			fileinfo.setProperty("blobkey", blobKey);
-			fileinfo.setProperty("date", blobinfo.getCreation());
-			fileinfo.setProperty("filename", blobinfo.getFilename());
-			fileinfo.setProperty("owner", user);
-			fileinfo.setProperty("size", blobinfo.getSize());
-			fileinfo.setProperty("contenttype", blobinfo.getContentType());
-
-			datastore.put(fileinfo);
-
-			out.println("<html><body>Upload successfully!</body></html>");
 		} catch (Exception ex) {
 			out.println("<html><body>Upload failed:" + ex.getMessage()
 					+ "</body></html>");
+			out.flush();
+			out.close();
 		}
 	}
 }
