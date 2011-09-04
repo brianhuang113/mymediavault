@@ -1,6 +1,7 @@
 package mediavault;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -30,27 +31,41 @@ public class Upload extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		UserService userService = UserServiceFactory.getUserService();
-		User user = userService.getCurrentUser();
+		PrintWriter out = res.getWriter();
 
-		Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
-		BlobKey blobKey = blobs.get("myFile");
+		try {
+			UserService userService = UserServiceFactory.getUserService();
+			User user = userService.getCurrentUser();
 
-		Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
-		DatastoreService datastore = DatastoreServiceFactory
-				.getDatastoreService();
-		BlobInfoFactory blobinfofactory = new BlobInfoFactory();
-		BlobInfo blobinfo = blobinfofactory.loadBlobInfo(blobKey);
-		Entity fileinfo = new Entity("fileinfo", fileKey);
-		fileinfo.setProperty("blobkey", blobKey);
-		fileinfo.setProperty("date", blobinfo.getCreation());
-		fileinfo.setProperty("filename", blobinfo.getFilename());
-		fileinfo.setProperty("owner", user);
-		fileinfo.setProperty("size", blobinfo.getSize());
-		fileinfo.setProperty("contenttype", blobinfo.getContentType());
+			Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
+			BlobKey blobKey = blobs.get("myFile");
 
-		datastore.put(fileinfo);
+			Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
+			DatastoreService datastore = DatastoreServiceFactory
+					.getDatastoreService();
+			BlobInfoFactory blobinfofactory = new BlobInfoFactory();
+			BlobInfo blobinfo = blobinfofactory.loadBlobInfo(blobKey);
+			String content = blobinfo.getContentType();
+			content = content.substring(0, content.indexOf("/"));
+			if (content != "image" && content != "audio" && content != "text"
+					&& content != "video") {
+				blobstoreService.delete(blobKey);
+				out.println("<html><body>Upload failed, invalid file type!</body></html>");
+			}
+			Entity fileinfo = new Entity("fileinfo", fileKey);
+			fileinfo.setProperty("blobkey", blobKey);
+			fileinfo.setProperty("date", blobinfo.getCreation());
+			fileinfo.setProperty("filename", blobinfo.getFilename());
+			fileinfo.setProperty("owner", user);
+			fileinfo.setProperty("size", blobinfo.getSize());
+			fileinfo.setProperty("contenttype", blobinfo.getContentType());
 
-		res.sendRedirect("/");
+			datastore.put(fileinfo);
+
+			out.println("<html><body>Upload successfully!</body></html>");
+		} catch (Exception ex) {
+			out.println("<html><body>Upload failed:" + ex.getMessage()
+					+ "</body></html>");
+		}
 	}
 }
