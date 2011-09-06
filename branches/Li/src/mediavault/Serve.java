@@ -26,6 +26,5 @@ public class Serve extends HttpServlet {
 		BlobInfo blobinfo = blobinfofactory.loadBlobInfo(blobKey);
 		res.setHeader("Content-Disposition", "attachment; filename=\"" + blobinfo.getFilename() + "\"");
 		blobstoreService.serve(blobKey, res);
-
 	}
 }
