@@ -32,12 +32,12 @@ String filename = "";
 String desc = "";
 for (Entity result : pq.asIterable()) {
 	filename = result.getProperty("filename").toString();
-	filename = filename
+	filename = filename.substring(0, filename.lastIndexOf("."));
 	if (result.getProperty("desc") != null)
 		desc = result.getProperty("desc").toString();
 }
 %>
-<form id="edit" action="update" method="post" target="main">
+<form id="edit" action="Update" method="post" target="main">
 File name: <br />
 <input type="text" name="filename" value="<% out.print(filename); %>"> <br />
 Description: <br />
