@@ -30,7 +30,9 @@
 			<th>Content Type</th>
 			<th>Size</th>
 			<th>Owner</th>
+			<th>Description</th>
 			<th>Delete</th>
+			<th>Edit Information</th>
 		</tr>
 		<%
 			String listType = request.getParameter("listtype");
@@ -85,10 +87,18 @@
 									.getNickname());
 						}
 						out.println("</th>");
-						out.println("<th class=\"spec\">" + 
+						out.println("<th class=\"spec\">");
+						for (Entity result : pq.asIterable()) {
+							if (result.getProperty("desc") != null)
+								out.println(result.getProperty("desc"));
+						}
+						out.println("</th>");
 						out.println("<th class=\"spec\"><a href=\"/delete?blob_key="
 								+ blobinfo.getBlobKey().getKeyString()
 								+ "\">delete</a></th>");
+						out.println("<th class=\"spec\"><a href=\"/edit.jsp?blob_key="
+								+ blobinfo.getBlobKey().getKeyString()
+								+ "\">edit</a></th>");
 						out.println("</tr>");
 					} else {
 						out.println("<tr><th class=\"specalt\"><a href=\"/serve?blob_key="
@@ -107,9 +117,18 @@
 									.getNickname());
 						}
 						out.println("</th>");
+						out.println("<th class=\"specalt\">");
+						for (Entity result : pq.asIterable()) {
+							if (result.getProperty("desc") != null)
+								out.println(result.getProperty("desc"));
+						}
+						out.println("</th>");
 						out.println("<th class=\"specalt\"><a href=\"/delete?blob_key="
 								+ blobinfo.getBlobKey().getKeyString()
 								+ "\">delete</a></th>");
+						out.println("<th class=\"specalt\"><a href=\"/edit.jsp?blob_key="
+								+ blobinfo.getBlobKey().getKeyString()
+								+ "\">edit</a></th>");
 						out.println("</tr>");
 					}
 				}

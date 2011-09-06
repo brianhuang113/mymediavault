@@ -18,15 +18,14 @@ public class Delete extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws IOException {
-		PrintWriter out = res.getWriter();
 		
 		try {
 			BlobKey blobKey = new BlobKey(req.getParameter("blob_key"));
 			blobstoreService.delete(blobKey);
 			
-			out.println("<html><body>Deleted successfully!</body></html>");
+			res.sendRedirect("msg.jsp?msg=Deleted successfully!");
 		} catch (Exception e) {
-			out.println("<html><body>Deleted failed: " + e.getMessage() + "</body></html>");
+			res.sendRedirect("msg.jsp?msg=Deleted failed: " + e.getMessage());
 		}
 	}
 }

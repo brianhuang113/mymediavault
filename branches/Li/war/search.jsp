@@ -26,6 +26,7 @@
 			<th>Content Type</th>
 			<th>Size</th>
 			<th>Owner</th>
+			<th>Description</th>
 			<th>Delete</th>
 		</tr>
 		<%
@@ -63,6 +64,10 @@
 				out.println("<th class=\"spec\">" + user.getNickname());
 
 				out.println("</th>");
+				if (result.getProperty("desc") == null)
+					out.println("<th class=\"spec\"></th>");
+				else
+					out.println("<th class=\"spec\">" + result.getProperty("desc") + "</th>");
 				out.println("<th class=\"spec\"><a href=\"/delete?blob_key="
 						+ blobKey.getKeyString() + "\">delete</a></th>");
 				out.println("</tr>");
