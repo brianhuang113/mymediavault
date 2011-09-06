@@ -36,8 +36,10 @@ $("#fileform").submit(function() {
 <body>
 	<form id="fileform" action="<%=blobstoreService.createUploadUrl("/upload")%>"
 		method="post" enctype="multipart/form-data">
-		<input type="text" name="foo"> <input type="file"
-			name="myFile"> <input type="submit" value="Submit">
+		<input type="file"
+			name="myFile"> <br />
+			Description: <br />
+		<textarea name="desc" cols="80" rows="6"></textarea><input type="submit" value="Submit">
 	</form>
 </body>
 </html>

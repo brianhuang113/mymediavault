@@ -100,7 +100,11 @@ td {
 												onmouseout="mclosetime()">File Listing</a>
 												<div id="m2" onmouseover="mcancelclosetime()"
 													onmouseout="mclosetime()">
-													<a href="listallfiles.jsp" target="main">All Files</a>
+													<a href="listallfiles.jsp?listtype=1" target="main">All Files</a>
+													<a href="listallfiles.jsp?listtype=2" target="main">Image Files</a>
+													<a href="listallfiles.jsp?listtype=3" target="main">Audio Files</a>
+													<a href="listallfiles.jsp?listtype=4" target="main">Video Files</a>
+													<a href="listallfiles.jsp?listtype=5" target="main">Text Files</a>
 												</div>
 											</li>
 											<li><a
@@ -136,7 +140,7 @@ td {
 							<%
 								if (user != null) {
 							%> <iframe width="100%" height="100%" style="border: 0;"
-								src="listallfiles.jsp" name="main"> Your web browser
+								src="listallfiles.jsp?listtype=1" name="main"> Your web browser
 								doesn't support "iframe", please update.</iframe> <%
  	}
  %>

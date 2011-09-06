@@ -31,15 +31,14 @@ public class Upload extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 
-		res.setContentType("text/html");
-		PrintWriter out = res.getWriter();
-
 		try {
 			UserService userService = UserServiceFactory.getUserService();
 			User user = userService.getCurrentUser();
 
 			Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
 			BlobKey blobKey = blobs.get("myFile");
+			
+			String desc = req.getParameter("desc");
 
 			Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
 			DatastoreService datastore = DatastoreServiceFactory
@@ -51,10 +50,8 @@ public class Upload extends HttpServlet {
 			if (!content.equals(new String("image")) && !(content.equals("audio"))
 					&& !(content.equals("text")) && !(content.equals("video"))) {
 				blobstoreService.delete(blobKey);
-				out.println("<html><body>Upload failed, invalid file type! "
-						+ content + "</body></html>");
-				out.flush();
-				out.close();
+				res.sendRedirect("msg.jsp?msg=Upload failed, invalid file type! "
+						+ content);
 			} else {
 				Entity fileinfo = new Entity("fileinfo", fileKey);
 				fileinfo.setProperty("blobkey", blobKey);
@@ -63,18 +60,14 @@ public class Upload extends HttpServlet {
 				fileinfo.setProperty("owner", user);
 				fileinfo.setProperty("size", blobinfo.getSize());
 				fileinfo.setProperty("contenttype", blobinfo.getContentType());
+				fileinfo.setProperty("desc", desc);
 
 				datastore.put(fileinfo);
 
-				out.println("<html><body>Upload successfully!</body></html>");
-				out.flush();
-				out.close();
+				res.sendRedirect("msg.jsp?msg=Upload successfully!");
 			}
 		} catch (Exception ex) {
-			out.println("<html><body>Upload failed:" + ex.getMessage()
-					+ "</body></html>");
-			out.flush();
-			out.close();
+			res.sendRedirect("msg.jsp?msg=Upload failed:" + ex.getMessage());
 		}
 	}
 }

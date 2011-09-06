@@ -41,9 +41,9 @@
 
 			for (Entity result : pq.asIterable()) {
 				String filename = (String) result.getProperty("filename");
-				filename = filename.substring(0, filename.lastIndexOf("."));
+				filename = filename.substring(0, filename.lastIndexOf(".")).toLowerCase();
 				
-				if (filename.indexOf(searchName) > 0)
+				if (filename.indexOf(searchName.toLowerCase()) >= 0)
 				{
 				BlobKey blobKey = (BlobKey) result.getProperty("blobkey");
 				Date createdDate = (Date) result.getProperty("date");
