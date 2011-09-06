@@ -83,7 +83,7 @@ td {
 						<td height="25" align="right">&nbsp;</td>
 						<td align="center" bgcolor="#eeeeee">
 							<table style="padding: 3px; border-spacing: 0;">
-							<form id="search" action="search.jsp" method="post">
+							<form id="search" action="search.jsp" method="post" target="main">
 								<tr style="text-align: center;">
 									<td><font style="font-family: Courier New;">《
 											Welcome <span style="color: #0066CC;"><%=user.getNickname()%></span>

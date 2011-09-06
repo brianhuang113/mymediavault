@@ -40,16 +40,20 @@
 			PreparedQuery pq = datastore.prepare(q);
 
 			for (Entity result : pq.asIterable()) {
-
+				String filename = (String) result.getProperty("filename");
+				filename = filename.substring(0, filename.lastIndexOf("."));
+				
+				if (filename.indexOf(searchName) > 0)
+				{
 				BlobKey blobKey = (BlobKey) result.getProperty("blobkey");
 				Date createdDate = (Date) result.getProperty("date");
-				String fileName = (String) result.getProperty("filename");
-				User user = (User) result.getProperty("user");
-				Integer fileSize = (Integer) result.getProperty("size");
+				String fileName2 = (String) result.getProperty("filename");
+				User user = (User) result.getProperty("owner");
+				Integer fileSize = Integer.parseInt(result.getProperty("size").toString());
 				String contentType = (String) result.getProperty("contenttype");
 
 				out.println("<tr><th class=\"spec\"><a href=\"/serve?blob_key="
-						+ blobKey.getKeyString() + "\">" + fileName
+						+ blobKey.getKeyString() + "\">" + fileName2
 						+ "</a></th>");
 				out.println("<th class=\"spec\">" + createdDate.toString()
 						+ "</th>");
@@ -62,6 +66,7 @@
 				out.println("<th class=\"spec\"><a href=\"/delete?blob_key="
 						+ blobKey.getKeyString() + "\">delete</a></th>");
 				out.println("</tr>");
+				}
 			}
 		%>
 	</table>
