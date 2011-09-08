@@ -72,7 +72,7 @@
 				else
 					out.println("<th class=\"spec\">" + result.getProperty("desc") + "</th>");
 				
-				out.println("<tr><th class=\"spec\"><a href=\"/download?blob_key="
+				out.println("<th class=\"spec\"><a href=\"/download?blob_key="
 						+ blobKey.getKeyString() + "\">download</a></th>");
 				if (curUser.getEmail().equals(user.getEmail()))
 				{
