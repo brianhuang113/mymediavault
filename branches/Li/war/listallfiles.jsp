@@ -31,6 +31,7 @@
 			<th>Size</th>
 			<th>Owner</th>
 			<th>Description</th>
+			<th>Download</th>
 			<th>Delete</th>
 			<th>Edit Information</th>
 		</tr>
@@ -41,6 +42,8 @@
 			Iterator<BlobInfo> itBlobinfo = blobinfofactory.queryBlobInfos();
 			DatastoreService datastore = DatastoreServiceFactory
 					.getDatastoreService();
+			UserService userService = UserServiceFactory.getUserService();
+			User curUser = userService.getCurrentUser();
 			Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
 			int i = 0;
 			while (itBlobinfo.hasNext()) {
@@ -82,7 +85,9 @@
 						out.println("<th class=\"spec\">" + blobinfo.getSize()
 								+ "</th>");
 						out.println("<th class=\"spec\">");
+						String owner = "";
 						for (Entity result : pq.asIterable()) {
+							owner = ((User)result.getProperty("owner")).getEmail();
 							out.println(((User) result.getProperty("owner"))
 									.getNickname());
 						}
@@ -93,12 +98,22 @@
 								out.println(result.getProperty("desc"));
 						}
 						out.println("</th>");
+						out.println("<th class=\"spec\"><a href=\"/download?blob_key="
+								+ blobinfo.getBlobKey().getKeyString()
+								+ "\">download</a></th>");
+						if (curUser.getEmail().equals(owner))
+						{
 						out.println("<th class=\"spec\"><a href=\"/delete?blob_key="
 								+ blobinfo.getBlobKey().getKeyString()
 								+ "\">delete</a></th>");
 						out.println("<th class=\"spec\"><a href=\"/edit.jsp?blob_key="
 								+ blobinfo.getBlobKey().getKeyString()
 								+ "\">edit</a></th>");
+						}
+						else
+						{
+							out.println("<th class=\"spec\"></th><th class=\"spec\"></th>");
+						}
 						out.println("</tr>");
 					} else {
 						out.println("<tr><th class=\"specalt\"><a href=\"/serve?blob_key="
@@ -112,7 +127,9 @@
 						out.println("<th class=\"specalt\">"
 								+ blobinfo.getSize() + "</th>");
 						out.println("<th class=\"specalt\">");
+						String owner = "";
 						for (Entity result : pq.asIterable()) {
+							owner = ((User)result.getProperty("owner")).getEmail();
 							out.println(((User) result.getProperty("owner"))
 									.getNickname());
 						}
@@ -123,12 +140,22 @@
 								out.println(result.getProperty("desc"));
 						}
 						out.println("</th>");
+						out.println("<th class=\"specalt\"><a href=\"/download?blob_key="
+								+ blobinfo.getBlobKey().getKeyString()
+								+ "\">download</a></th>");
+						if (curUser.getEmail().equals(owner))
+						{
 						out.println("<th class=\"specalt\"><a href=\"/delete?blob_key="
 								+ blobinfo.getBlobKey().getKeyString()
 								+ "\">delete</a></th>");
 						out.println("<th class=\"specalt\"><a href=\"/edit.jsp?blob_key="
 								+ blobinfo.getBlobKey().getKeyString()
 								+ "\">edit</a></th>");
+						}
+						else
+						{
+							out.println("<th class=\"specalt\"></th><th class=\"specalt\"></th>");
+						}
 						out.println("</tr>");
 					}
 				}

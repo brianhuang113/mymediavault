@@ -27,6 +27,7 @@
 			<th>Size</th>
 			<th>Owner</th>
 			<th>Description</th>
+			<th>Download</th>
 			<th>Delete</th>
 		</tr>
 		<%
@@ -36,6 +37,8 @@
 					.getDatastoreService();
 			Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
 
+			UserService userService = UserServiceFactory.getUserService();
+			User curUser = userService.getCurrentUser();
 			Query q = new Query("fileinfo", fileKey);
 
 			PreparedQuery pq = datastore.prepare(q);
@@ -68,8 +71,18 @@
 					out.println("<th class=\"spec\"></th>");
 				else
 					out.println("<th class=\"spec\">" + result.getProperty("desc") + "</th>");
+				
+				out.println("<tr><th class=\"spec\"><a href=\"/download?blob_key="
+						+ blobKey.getKeyString() + "\">download</a></th>");
+				if (curUser.getEmail().equals(user.getEmail()))
+				{
 				out.println("<th class=\"spec\"><a href=\"/delete?blob_key="
 						+ blobKey.getKeyString() + "\">delete</a></th>");
+				}
+				else
+				{
+					out.println("<th class=\"spec\"></th>");
+				}
 				out.println("</tr>");
 				}
 			}
