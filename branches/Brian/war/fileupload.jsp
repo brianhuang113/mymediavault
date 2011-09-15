@@ -38,6 +38,7 @@ $("#fileform").submit(function() {
 		method="post" enctype="multipart/form-data">
 		<input type="file"
 			name="myFile"> <br />
+		<input type="checkbox" name="isShared" >Shared<br/>
 			Description: <br />
 		<textarea name="desc" cols="80" rows="6"></textarea><input type="submit" value="Submit">
 	</form>

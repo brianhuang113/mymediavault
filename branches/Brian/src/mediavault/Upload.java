@@ -38,7 +38,8 @@ public class Upload extends HttpServlet {
 			BlobKey blobKey = blobs.get("myFile");
 			
 			String desc = req.getParameter("desc");
-
+            Boolean isShared = Boolean.parseBoolean(req.getParameter("isShared"));
+			
 			Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
 			DatastoreService datastore = DatastoreServiceFactory
 					.getDatastoreService();
@@ -60,6 +61,7 @@ public class Upload extends HttpServlet {
 				fileinfo.setProperty("size", blobinfo.getSize());
 				fileinfo.setProperty("contenttype", blobinfo.getContentType());
 				fileinfo.setProperty("desc", desc);
+				fileinfo.setProperty("shared", isShared);
 
 				datastore.put(fileinfo);
 

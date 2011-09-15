@@ -45,6 +45,7 @@
 			UserService userService = UserServiceFactory.getUserService();
 			User curUser = userService.getCurrentUser();
 			Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
+			int i = 0;
 			while (itBlobinfo.hasNext()) {
 				BlobInfo blobinfo = itBlobinfo.next();
 				if (listType.equals(new String("1"))
@@ -72,54 +73,100 @@
 					q.addFilter("blobkey", Query.FilterOperator.EQUAL, blobinfo
 							.getBlobKey().getKeyString());
 					PreparedQuery pq = datastore.prepare(q);
-					String owner = "";
-					for (Entity result : pq.asIterable()) {
-						owner = ((User)result.getProperty("owner")).getEmail();
-						if (curUser.getEmail().equals(owner))
-						{
-					
-					
-					out.println("<tr><th class=\"spec\"><a href=\"/serve?blob_key="
-							+ blobinfo.getBlobKey().getKeyString()
-							+ "\">"
-							+ blobinfo.getFilename() + "</a></th>");
-					out.println("<th class=\"spec\">"
-							+ blobinfo.getCreation().toString() + "</th>");
-					out.println("<th class=\"spec\">"
-							+ blobinfo.getContentType() + "</th>");
-					if(blobinfo.getSize()<1024){
-						out.println("<th class=\"spec\">" + blobinfo.getSize()+"B"
-								+ "</th>");
-					}
-					else if (blobinfo.getSize()<1024*1024){
-						out.println("<th class=\"spec\">" + blobinfo.getSize()/1024+"KB"
-								+ "</th>");
-					}else {out.println("<th class=\"spec\">" + blobinfo.getSize()/(1024*1024)+"MB"
-							+ "</th>");}
-					
-					out.println("<th class=\"spec\">");
-					out.println(curUser.getNickname());
-					out.println("</th>");
-					out.println("<th class=\"spec\">");
-					for (Entity result2 : pq.asIterable()) {
-						if (result2.getProperty("desc") != null)
-							out.println(result2.getProperty("desc"));
-					}
-					out.println("</th>");
-					out.println("<th class=\"spec\"><a href=\"/download?blob_key="
-							+ blobinfo.getBlobKey().getKeyString()
-							+ "\">download</a></th>");
+					Entity result = pq.asSingleEntity();
+					User owner = ((User) result.getProperty("owner"));
+					if (curUser.equals(owner)
+							|| (result.getProperty("shared") == null ? false
+									: (Boolean) result.getProperty("shared"))) {
+						if (i % 2 == 0) {
+							out.println("<tr><th class=\"spec\"><a href=\"/serve?blob_key="
+									+ blobinfo.getBlobKey().getKeyString()
+									+ "\">"
+									+ blobinfo.getFilename()
+									+ "</a></th>");
+							out.println("<th class=\"spec\">"
+									+ blobinfo.getCreation().toString()
+									+ "</th>");
+							out.println("<th class=\"spec\">"
+									+ blobinfo.getContentType() + "</th>");
 
-					out.println("<th class=\"spec\"><a href=\"/delete?blob_key="
-							+ blobinfo.getBlobKey().getKeyString()
-							+ "\">delete</a></th>");
-					out.println("<th class=\"spec\"><a href=\"/edit.jsp?blob_key="
-							+ blobinfo.getBlobKey().getKeyString()
-							+ "\">edit</a></th>");
-					}
-					out.println("</tr>");
+							if(blobinfo.getSize()<1024){
+								out.println("<th class=\"spec\">" + blobinfo.getSize()+"B"
+										+ "</th>");
+							}
+							else if (blobinfo.getSize()<1024*1024){
+								out.println("<th class=\"spec\">" + blobinfo.getSize()/1024+"KB"
+										+ "</th>");
+							}else {out.println("<th class=\"spec\">" + blobinfo.getSize()/(1024*1024)+"MB"
+									+ "</th>");}
+							out.println("<th class=\"spec\">");
+							out.println(owner.getNickname());
+							out.println("</th>");
+							out.println("<th class=\"spec\">");
+							out.println(result.getProperty("desc") != null ? result
+									.getProperty("desc") : "");
+							out.println("</th>");
+							out.println("<th class=\"spec\"><a href=\"/download?blob_key="
+									+ blobinfo.getBlobKey().getKeyString()
+									+ "\">download</a></th>");
+							if (curUser.equals(owner)) {
+								out.println("<th class=\"spec\"><a href=\"/delete?blob_key="
+										+ blobinfo.getBlobKey().getKeyString()
+										+ "\">delete</a></th>");
+								out.println("<th class=\"spec\"><a href=\"/edit.jsp?blob_key="
+										+ blobinfo.getBlobKey().getKeyString()
+										+ "\">edit</a></th>");
+							} else {
+								out.println("<th class=\"spec\"></th><th class=\"spec\"></th>");
+							}
+							out.println("</tr>");
+						} else {
+							out.println("<tr><th class=\"specalt\"><a href=\"/serve?blob_key="
+									+ blobinfo.getBlobKey().getKeyString()
+									+ "\">"
+									+ blobinfo.getFilename()
+									+ "</a></th>");
+							out.println("<th class=\"specalt\">"
+									+ blobinfo.getCreation().toString()
+									+ "</th>");
+							out.println("<th class=\"specalt\">"
+									+ blobinfo.getContentType() + "</th>");
+
+							if(blobinfo.getSize()<1024){
+								out.println("<th class=\"specalt\">" + blobinfo.getSize()+"B"
+										+ "</th>");
+							}
+							else if (blobinfo.getSize()<1024*1024){
+								out.println("<th class=\"specalt\">" + blobinfo.getSize()/1024+"KB"
+										+ "</th>");
+							}else {out.println("<th class=\"specalt\">" + blobinfo.getSize()/(1024*1024)+"MB"
+									+ "</th>");}
+							out.println("<th class=\"specalt\">");
+							out.println(owner.getNickname());
+							out.println("</th>");
+							out.println("<th class=\"specalt\">");
+							out.println(result.getProperty("desc") != null ? result
+									.getProperty("desc") : "");
+							out.println("</th>");
+							out.println("<th class=\"specalt\"><a href=\"/download?blob_key="
+									+ blobinfo.getBlobKey().getKeyString()
+									+ "\">download</a></th>");
+							if (curUser.equals(owner)) {
+								out.println("<th class=\"specalt\"><a href=\"/delete?blob_key="
+										+ blobinfo.getBlobKey().getKeyString()
+										+ "\">delete</a></th>");
+								out.println("<th class=\"specalt\"><a href=\"/edit.jsp?blob_key="
+										+ blobinfo.getBlobKey().getKeyString()
+										+ "\">edit</a></th>");
+							} else {
+								out.println("<th class=\"specalt\"></th><th class=\"specalt\"></th>");
+							}
+							out.println("</tr>");
+						}
 					}
 				}
+
+				i++;
 			}
 		%>
 	</table>
