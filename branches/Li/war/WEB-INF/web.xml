@@ -6,21 +6,21 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	<servlet>
     <servlet-name>Upload</servlet-name>
-    <servlet-class>mediavault.Upload</servlet-class>
+    <servlet-class>mediavault.Viewers.Upload</servlet-class>
   </servlet>
   
   <servlet>
     <servlet-name>Serve</servlet-name>
-    <servlet-class>mediavault.Serve</servlet-class>
+    <servlet-class>mediavault.Viewers.Serve</servlet-class>
   </servlet>
   
   <servlet>
   	<servlet-name>Delete</servlet-name>
-  	<servlet-class>mediavault.Delete</servlet-class>
+  	<servlet-class>mediavault.Viewers.Delete</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>Download</servlet-name>
-  	<servlet-class>mediavault.Download</servlet-class>
+  	<servlet-class>mediavault.Viewers.Download</servlet-class>
   </servlet>
  
   <servlet-mapping>
