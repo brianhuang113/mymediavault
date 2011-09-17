@@ -1,4 +1,4 @@
-package mediavault;
+package mediavault.Viewers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,6 +40,7 @@ public class Delete extends HttpServlet {
 			for (Entity result : pq.asIterable()) {
 				keys.add(result.getKey());
 			}
+			datastore.delete(keys);
 			
 			res.sendRedirect("msg.jsp?msg=Deleted successfully!");
 		} catch (Exception e) {
