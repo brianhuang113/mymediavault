@@ -1,5 +1,7 @@
 package mediavault.Ctrls;
 
+import java.io.IOException;
+
 import com.google.appengine.api.blobstore.*;
 import com.google.appengine.api.users.*;
 import mediavault.Models.*;
@@ -9,7 +11,7 @@ public class Ctrl {
 	public Ctrl() {
 	}
 
-	public static String UploadFile(BlobKey blobKey, String desc, Boolean isShared, User owner) {
+	public static String UploadFile(BlobKey blobKey, String desc, Boolean isShared, User owner) throws Exception {
 		String uploadResult = "";
 		BlobstoreService blobstoreService = BlobstoreServiceFactory
 				.getBlobstoreService();
@@ -50,5 +52,20 @@ public class Ctrl {
 		}
 		
 		return uploadResult;
+	}
+	
+	public static void UpdateFile(String desc, String filename, String blobkey,
+			Boolean isShared, String contentType) {
+		String contenttype = contentType.substring(0, contentType.indexOf("/"));
+		if (contenttype.toLowerCase().equals(new String("image"))) {
+			ImageFile imageFile = new ImageFile(blobkey);
+			String oriFilename = imageFile.getFileName();
+			String extFilename = oriFilename.substring(oriFilename.indexOf("."), oriFilename.length());
+			imageFile.setFileName(filename + extFilename);
+			imageFile.setDesc(desc);
+			imageFile.setIsShared(isShared);
+			
+			imageFile.Update();
+		}
 	}
 }

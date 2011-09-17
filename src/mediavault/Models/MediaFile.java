@@ -6,9 +6,13 @@ import com.google.appengine.api.blobstore.*;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.users.*;
 
-public abstract class MediaFile {
+public class MediaFile {
 	private BlobKey blobKey;
 	private Date creationDate;
 	private String fileName;
@@ -20,6 +24,25 @@ public abstract class MediaFile {
 	
 	public MediaFile() {
 		
+	}
+	
+	public MediaFile(String blobkey) {
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
+		Query q = new Query("fileinfo", fileKey);
+		q.addFilter("blobkey", Query.FilterOperator.EQUAL, blobkey);
+		PreparedQuery pq = datastore.prepare(q);
+
+		Entity entity =  pq.asSingleEntity();
+		this.blobKey = (BlobKey)entity.getProperty("blobkey");
+		this.creationDate = (Date)entity.getProperty("date");
+		this.fileName = (String)entity.getProperty("filename");
+		this.owner = (User)entity.getProperty("owner");
+		this.size = Long.parseLong(entity.getProperty("size").toString());
+		this.contentType = (String)entity.getProperty("contenttype");
+		this.desc = (entity.getProperty("desc") == null ? "" : (String)entity.getProperty("desc"));
+		this.isShared = (entity.getProperty("shared") == null ? false : (Boolean)entity.getProperty("shared"));	
 	}
 	
 	public MediaFile(BlobKey blobKey, Date creationDate, String fileName, User owner,
@@ -112,5 +135,16 @@ public abstract class MediaFile {
 		fileinfo.setProperty("shared", this.isShared);
 		
 		datastore.put(fileinfo);
+	}
+	
+	protected void Update(Entity entity) {
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		
+		entity.setProperty("filename", this.fileName);
+		entity.setProperty("desc", this.desc);
+		entity.setProperty("shared", this.isShared);
+		
+		datastore.put(entity);
 	}
 }

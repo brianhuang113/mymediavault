@@ -1,18 +1,6 @@
-<%@ page
-	import="com.google.appengine.api.blobstore.BlobstoreServiceFactory"%>
-<%@ page import="com.google.appengine.api.blobstore.BlobstoreService"%>
-<%@ page import="com.google.appengine.api.blobstore.BlobInfo"%>
-<%@ page import="com.google.appengine.api.blobstore.BlobInfoFactory"%>
-<%@ page import="com.google.appengine.api.blobstore.BlobKey"%>
-<%@ page import="java.util.Iterator"%>
-<%@ page import="java.util.Date"%>
-<%@ page
-	import="com.google.appengine.api.datastore.DatastoreServiceFactory"%>
+<%@ page import="mediavault.Viewers.*" %>
+<%@ page import="mediavault.Models.*" %>
 <%@ page import="com.google.appengine.api.datastore.*" %>
-<%@ page import="com.google.appengine.api.users.User"%>
-<%@ page import="com.google.appengine.api.users.UserService"%>
-<%@ page import="com.google.appengine.api.users.UserServiceFactory"%>
-<%@ page import="java.util.List" %>
 <html>
 <head>
 <title>File Search</title>
@@ -22,26 +10,18 @@
 <%
 String blobkey = request.getParameter("blob_key");
 
-DatastoreService datastore = DatastoreServiceFactory
-.getDatastoreService();
-Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
-Query q = new Query("fileinfo", fileKey);
-q.addFilter("blobkey", Query.FilterOperator.EQUAL, blobkey);
-PreparedQuery pq = datastore.prepare(q);
-String filename = "";
-String desc = "";
-for (Entity result : pq.asIterable()) {
-	filename = result.getProperty("filename").toString();
-	filename = filename.substring(0, filename.lastIndexOf("."));
-	if (result.getProperty("desc") != null)
-		desc = result.getProperty("desc").toString();
-}
+MediaFile mediaFile = new MediaFile(blobkey);
+String filename = mediaFile.getFileName();
+filename = filename.substring(0, filename.indexOf("."));
 %>
-<form id="edit" action="Update" method="post" target="main">
+<form id="edit" action="/update" method="post" target="main">
 File name: <br />
+<input type="hidden" name="blobkey" value="<% out.print(blobkey); %>">
+<input type="hidden" name="contenttype" value="<% out.print(mediaFile.getContentType()); %>">
 <input type="text" name="filename" value="<% out.print(filename); %>"> <br />
+<input type="checkbox" name="isShared" >Shared<br/>
 Description: <br />
-<textarea name="desc" cols="80" rows="6"><% out.print(desc); %></textarea> <br />
+<textarea name="desc" cols="80" rows="6"><% out.print(mediaFile.getDesc()); %></textarea> <br />
 <input type="submit" value="submit">
 </form>
 </body>

@@ -27,7 +27,8 @@ public class Viewer {
 		for (Entity result : pq.asIterable()) {
 			String contentType = (String) result.getProperty("contenttype");
 			User owner = (User) result.getProperty("owner");
-			Boolean isShared = (result.getProperty("shared") == null ? false : (Boolean) result.getProperty("shared"));
+			Boolean isShared = (result.getProperty("shared") == null ? false
+					: (Boolean) result.getProperty("shared"));
 
 			if (fileType.equals(new String("1"))
 					|| (fileType.equals(new String("2")) && contentType
@@ -42,8 +43,7 @@ public class Viewer {
 					|| (fileType.equals(new String("5")) && contentType
 							.substring(0, contentType.indexOf("/")).equals(
 									new String("text")))) {
-				if (curUser.getEmail().equals(owner.getEmail()) || 
-						isShared)
+				if (curUser.getEmail().equals(owner.getEmail()) || isShared)
 					entities.add(result);
 			}
 		}
@@ -61,7 +61,7 @@ public class Viewer {
 			Date createdDate = (Date) entity.getProperty("date");
 			String fileName2 = (String) entity.getProperty("filename");
 			User user = (User) entity.getProperty("owner");
-			Integer fileSize = Integer.parseInt(entity.getProperty("size")
+			Long fileSize = Long.parseLong(entity.getProperty("size")
 					.toString());
 			String contentType = (String) entity.getProperty("contenttype");
 
@@ -109,10 +109,12 @@ public class Viewer {
 		List<Entity> entities = new ArrayList<Entity>();
 		for (Entity result : pq.asIterable()) {
 			String filename = (String) result.getProperty("filename");
-			filename = filename.substring(0, filename.lastIndexOf(".")).toLowerCase();
+			filename = filename.substring(0, filename.lastIndexOf("."))
+					.toLowerCase();
 			User owner = (User) result.getProperty("owner");
-			Boolean isShared = (result.getProperty("shared") == null ? false : (Boolean) result.getProperty("shared"));
-			
+			Boolean isShared = (result.getProperty("shared") == null ? false
+					: (Boolean) result.getProperty("shared"));
+
 			if (filename.indexOf(searchName.toLowerCase()) >= 0) {
 
 				if (curUser.getEmail().equals(owner.getEmail()) || isShared)
