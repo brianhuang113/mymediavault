@@ -36,9 +36,9 @@ public class Upload extends HttpServlet {
 			String desc = req.getParameter("desc");
             Boolean isShared = Boolean.parseBoolean(req.getParameter("isShared"));
 			
-			String resultString = Ctrl.UploadFile(blobKey, desc, isShared, user);
+			String result = Ctrl.UploadFile(blobKey, desc, isShared, user);
 			
-			res.sendRedirect("/msg.jsp?msg=" + resultString);
+			res.sendRedirect("/msg.jsp?msg=" + result);
 			
 		} catch (Exception ex) {
 			res.sendRedirect("/msg.jsp?msg=Upload failed:" + ex.getMessage());

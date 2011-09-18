@@ -4,6 +4,7 @@
 <head>
 <title>File List</title>
 <link href="liststyle.css" rel="Stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
 	<table id="mytable" style="border-spacing: 0">

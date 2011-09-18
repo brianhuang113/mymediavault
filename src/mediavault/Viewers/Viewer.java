@@ -85,7 +85,7 @@ public class Viewer {
 				output += "<td class=\"spec\"><a href=\"/delete?blob_key="
 						+ blobKey.getKeyString() + "\">delete</a></td>";
 				output += "<td class=\"spec\"><a href=\"/edit.jsp?blob_key="
-						+ blobKey.getKeyString() + "\">edit</a></td>";
+						+ blobKey.getKeyString() + "&contenttype=" + contentType + "\">edit</a></td>";
 			} else {
 				output += "<td class=\"spec\"></td><td class=\"spec\"></td>";
 			}
