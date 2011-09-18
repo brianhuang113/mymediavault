@@ -27,7 +27,7 @@ File name: <br />
 <input type="hidden" name="blobkey" value="<% out.print(blobkey); %>">
 <input type="hidden" name="contenttype" value="<% out.print(mediaFile.getContentType()); %>">
 <input type="text" name="filename" value="<% out.print(filename); %>"> <br />
-<input type="checkbox" name="isShared" >Shared<br/>
+<input type="checkbox" name="isShared" value="true" <% out.print(Viewer.OutPutShared(mediaFile.IsShared())); %>>Shared<br/>
 Description: <br />
 <textarea name="desc" cols="80" rows="6"><% out.print(mediaFile.getDesc()); %></textarea> <br />
 <%

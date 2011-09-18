@@ -125,4 +125,8 @@ public class Viewer {
 
 		return output;
 	}
+	
+	public static String OutPutShared(Boolean isShared) {
+		return (isShared ? "Checked" : "");
+	}
 }
