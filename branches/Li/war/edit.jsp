@@ -1,6 +1,8 @@
 <%@ page import="mediavault.Viewers.*" %>
 <%@ page import="mediavault.Models.*" %>
 <%@ page import="com.google.appengine.api.datastore.*" %>
+<%@ page import="com.dusbabek.lib.id3.*" %>
+<%@ page import="java.net.URLDecoder" %>
 <html>
 <head>
 <title>File Search</title>
@@ -9,8 +11,12 @@
 <body>
 <%
 String blobkey = request.getParameter("blob_key");
+String contenttype = request.getParameter("contenttype");
 
-MediaFile mediaFile = new MediaFile(blobkey);
+MediaFile mediaFile = null;
+if (contenttype.toLowerCase().equals(new String("audio/mp3"))) {
+	mediaFile = new AudioFile(blobkey);
+}
 String filename = mediaFile.getFileName();
 filename = filename.substring(0, filename.indexOf("."));
 %>
@@ -22,6 +28,28 @@ File name: <br />
 <input type="checkbox" name="isShared" >Shared<br/>
 Description: <br />
 <textarea name="desc" cols="80" rows="6"><% out.print(mediaFile.getDesc()); %></textarea> <br />
+<%
+if (contenttype.toLowerCase().equals(new String("audio/mp3"))) {
+	if (!((AudioFile)mediaFile).hasTag()) {
+		try {
+			((AudioFile)mediaFile).UpdateMetadata();
+		
+%>
+Artist: <input type="text" name="artist" value="<% out.print(URLDecoder.decode(((AudioFile)mediaFile).getArtist(), "UTF-8")); %>">
+Title: <input type="text" name="title" value="<% out.print(((AudioFile)mediaFile).getTitle()); %>">
+Album: <input type="text" name="album" value="<% out.print(((AudioFile)mediaFile).getAlbum()); %>"><br />
+Track: <input type="text" name="track" value="<% out.print(((AudioFile)mediaFile).getTrack()); %>">
+Genre: <input type="text" name="genre" value="<% out.print(((AudioFile)mediaFile).getGenre()); %>">
+Year: <input type="text" name="year" value="<% out.print(((AudioFile)mediaFile).getYear()); %>"><br />
+Comment: <input type="text" size="80" name="comment" value="<% out.print(((AudioFile)mediaFile).getComment()); %>">
+<%
+		}
+		catch (Exception e) {
+			out.println("no mp3 tag found: " + e.getMessage());
+		}
+	}
+}
+%>
 <input type="submit" value="submit">
 </form>
 </body>
