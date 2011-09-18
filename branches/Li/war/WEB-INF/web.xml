@@ -26,10 +26,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   	<servlet-name>Update</servlet-name>
   	<servlet-class>mediavault.Viewers.Update</servlet-class>
   </servlet>
-  <servlet>
-  	<servlet-name>UpdateMetadata</servlet-name>
-  	<servlet-class>mediavault.Viewers.UpdateMetadata</servlet-class>
-  </servlet>
  
   <servlet-mapping>
     <servlet-name>Upload</servlet-name>
@@ -52,10 +48,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <servlet-mapping>
   	<servlet-name>Update</servlet-name>
   	<url-pattern>/update</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>UpdateMetadata</servlet-name>
-  	<url-pattern>/updateMetadata</url-pattern>
   </servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
