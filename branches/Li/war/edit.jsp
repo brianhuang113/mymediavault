@@ -43,7 +43,7 @@ Album: <input type="text" name="album" value="<% out.print(((AudioFile)mediaFile
 Track: <input type="text" name="track" value="<% out.print(((AudioFile)mediaFile).getTrack()); %>">
 Genre: <input type="text" name="genre" value="<% out.print(((AudioFile)mediaFile).getGenre()); %>">
 Year: <input type="text" name="year" value="<% out.print(((AudioFile)mediaFile).getYear()); %>"><br />
-Comment: <input type="text" width="80" name="comment" value="<% out.print(((AudioFile)mediaFile).getComment()); %>">
+Comment: <input type="text" size="60" name="comment" value="<% out.print(((AudioFile)mediaFile).getComment()); %>">
 <%
 		}
 		catch (Exception e) {
@@ -58,7 +58,7 @@ Album: <input type="text" name="album" value="<% out.print(((AudioFile)mediaFile
 Track: <input type="text" name="track" value="<% out.print(((AudioFile)mediaFile).getTrack()); %>">
 Genre: <input type="text" name="genre" value="<% out.print(((AudioFile)mediaFile).getGenre()); %>">
 Year: <input type="text" name="year" value="<% out.print(((AudioFile)mediaFile).getYear()); %>"><br />
-Comment: <input type="text" width="80" name="comment" value="<% out.print(((AudioFile)mediaFile).getComment()); %>">
+Comment: <input type="text" size="60" name="comment" value="<% out.print(((AudioFile)mediaFile).getComment()); %>">
 <%
 	}
 }
