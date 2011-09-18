@@ -2,7 +2,6 @@
 <%@ page import="mediavault.Models.*" %>
 <%@ page import="com.google.appengine.api.datastore.*" %>
 <%@ page import="com.dusbabek.lib.id3.*" %>
-<%@ page import="java.net.URLDecoder" %>
 <html>
 <head>
 <title>File Search</title>
@@ -16,6 +15,9 @@ String contenttype = request.getParameter("contenttype");
 MediaFile mediaFile = null;
 if (contenttype.toLowerCase().equals(new String("audio/mp3"))) {
 	mediaFile = new AudioFile(blobkey);
+}
+else {
+	mediaFile = new MediaFile(blobkey);
 }
 String filename = mediaFile.getFileName();
 filename = filename.substring(0, filename.indexOf("."));
@@ -35,17 +37,17 @@ if (contenttype.toLowerCase().equals(new String("audio/mp3"))) {
 			((AudioFile)mediaFile).UpdateMetadata();
 		
 %>
-Artist: <input type="text" name="artist" value="<% out.print(URLDecoder.decode(((AudioFile)mediaFile).getArtist(), "UTF-8")); %>">
+Artist: <input type="text" name="artist" value="<% out.print(((AudioFile)mediaFile).getArtist()); %>">
 Title: <input type="text" name="title" value="<% out.print(((AudioFile)mediaFile).getTitle()); %>">
 Album: <input type="text" name="album" value="<% out.print(((AudioFile)mediaFile).getAlbum()); %>"><br />
 Track: <input type="text" name="track" value="<% out.print(((AudioFile)mediaFile).getTrack()); %>">
 Genre: <input type="text" name="genre" value="<% out.print(((AudioFile)mediaFile).getGenre()); %>">
 Year: <input type="text" name="year" value="<% out.print(((AudioFile)mediaFile).getYear()); %>"><br />
-Comment: <input type="text" size="80" name="comment" value="<% out.print(((AudioFile)mediaFile).getComment()); %>">
+Comment: <input type="text" width="80" name="comment" value="<% out.print(((AudioFile)mediaFile).getComment()); %>">
 <%
 		}
 		catch (Exception e) {
-			out.println("no mp3 tag found: " + e.getMessage());
+			
 		}
 	}
 }
