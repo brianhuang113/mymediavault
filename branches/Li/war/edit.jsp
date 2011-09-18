@@ -50,6 +50,17 @@ Comment: <input type="text" width="80" name="comment" value="<% out.print(((Audi
 			
 		}
 	}
+	else {
+%>
+Artist: <input type="text" name="artist" value="<% out.print(((AudioFile)mediaFile).getArtist()); %>">
+Title: <input type="text" name="title" value="<% out.print(((AudioFile)mediaFile).getTitle()); %>">
+Album: <input type="text" name="album" value="<% out.print(((AudioFile)mediaFile).getAlbum()); %>"><br />
+Track: <input type="text" name="track" value="<% out.print(((AudioFile)mediaFile).getTrack()); %>">
+Genre: <input type="text" name="genre" value="<% out.print(((AudioFile)mediaFile).getGenre()); %>">
+Year: <input type="text" name="year" value="<% out.print(((AudioFile)mediaFile).getYear()); %>"><br />
+Comment: <input type="text" width="80" name="comment" value="<% out.print(((AudioFile)mediaFile).getComment()); %>">
+<%
+	}
 }
 %>
 <input type="submit" value="submit">
