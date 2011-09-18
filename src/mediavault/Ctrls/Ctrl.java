@@ -65,5 +65,15 @@ public class Ctrl {
 			
 			imageFile.Update();
 		}
+		else if (contenttype.toLowerCase().equals(new String("audio"))) {
+			AudioFile audioFile = new AudioFile(blobkey);
+			String oriFilename = audioFile.getFileName();
+			String extFilename = oriFilename.substring(oriFilename.indexOf("."), oriFilename.length());
+			audioFile.setFileName(filename + extFilename);
+			audioFile.setDesc(desc);
+			audioFile.setIsShared(isShared);
+			
+			audioFile.Update();
+		}
 	}
 }
