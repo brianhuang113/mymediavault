@@ -69,7 +69,7 @@ public class Viewer {
 					+ blobKey.getKeyString() + "\">" + fileName2 + "</a></td>";
 			output += "<td class=\"spec\">" + createdDate.toString() + "</td>";
 			output += "<td class=\"spec\">" + contentType + "</td>";
-			output += "<td class=\"spec\">" + fileSize.toString() + "</td>";
+			output += "<td class=\"spec\">" + ConvertFilesize(fileSize) + "</td>";
 			output += "<td class=\"spec\">" + user.getNickname();
 
 			output += "</td>";
@@ -93,6 +93,21 @@ public class Viewer {
 		}
 
 		return output;
+	}
+	
+	private static String ConvertFilesize(Long fileSize) {
+		String result = "";
+		if (fileSize < 1024) {
+			result = fileSize.toString() + "b";
+		}
+		else if (fileSize >=1024 && fileSize < 1024*1024) {
+			result = ((Long)(fileSize/1024)).toString() + "Kb";
+		}
+		else {
+			result = ((Long)(fileSize/(1024*1024))).toString() + "M";
+		}
+		
+		return result;
 	}
 
 	public static String SearchByName(String searchName) {
