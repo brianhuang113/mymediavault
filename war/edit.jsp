@@ -16,6 +16,9 @@ MediaFile mediaFile = null;
 if (contenttype.toLowerCase().equals(new String("audio/mp3"))) {
 	mediaFile = new AudioFile(blobkey);
 }
+else if (contenttype.substring(0, contenttype.indexOf("/")).toLowerCase().equals(new String("image"))) {
+	mediaFile = new ImageFile(blobkey);
+}
 else {
 	mediaFile = new MediaFile(blobkey);
 }
