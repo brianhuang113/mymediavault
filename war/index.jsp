@@ -62,7 +62,7 @@ td {
 <body
 	style="background-color: #999999; margin-top: 3px; margin-left: 3px;">
 	<table
-		style="width: 100%; height: 100%; border: 0; text-align: center; padding: 0; background-color: #669900; border-spacing: 1px;">
+		style="min-width: 1000px; width: 100%; height: 100%; border: 0; text-align: center; padding: 0; background-color: #669900; border-spacing: 1px;">
 		<tr bgcolor="#99CC66">
 			<td height="50" align="center" bgcolor="#99CC66">
 				<p
@@ -105,6 +105,7 @@ td {
 													<a href="listallfiles.jsp?listtype=3" target="main">Audio Files</a>
 													<a href="listallfiles.jsp?listtype=4" target="main">Video Files</a>
 													<a href="listallfiles.jsp?listtype=5" target="main">Text Files</a>
+													<a href="listallfiles.jsp?listtype=6" target="main">Zip Files</a>
 												</div>
 											</li>
 											<li><a
@@ -116,6 +117,7 @@ td {
 									<td>
 										<input type="text" name="searchName">
 										<input type="submit" value="Search">
+										<a href="advsearch.jsp" target="main">Advanced Search</a>
 									</td>
 								</tr>
 								</form>

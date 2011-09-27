@@ -16,9 +16,10 @@ public class Ctrl {
 		BlobInfoFactory blobinfofactory = new BlobInfoFactory();
 		BlobInfo blobinfo = blobinfofactory.loadBlobInfo(blobKey);
 		String content = blobinfo.getContentType();
-		content = content.substring(0, content.indexOf("/"));
+		content = content.substring(0, content.indexOf("/")).toLowerCase();
 		if (!content.equals(new String("image")) && !(content.equals("audio"))
-				&& !(content.equals("text")) && !(content.equals("video"))) {
+				&& !(content.equals("text")) && !(content.equals("video"))
+				&& !(blobinfo.getContentType().toLowerCase().equals(new String("application/zip")))) {
 			blobstoreService.delete(blobKey);
 			uploadResult = "Upload failed, invalid file type! " + content;
 		} else {
@@ -46,6 +47,12 @@ public class Ctrl {
 						desc, isShared);
 				videoFile.Save();
 			}
+			if (blobinfo.getContentType().toLowerCase().equals(new String("application/zip"))) {
+				ZipFile zipFile = new ZipFile(blobKey, blobinfo.getCreation(),
+						blobinfo.getFilename(), owner, blobinfo.getSize(),blobinfo.getContentType(),
+						desc, isShared);
+				zipFile.Save();
+			}
 			uploadResult = "Upload successfully!";
 		}
 		
@@ -54,7 +61,7 @@ public class Ctrl {
 	
 	public static void UpdateFile(String desc, String filename, String blobkey,
 			Boolean isShared, String contentType) {
-		String contenttype = contentType.substring(0, contentType.indexOf("/"));
+		String contenttype = contentType.substring(0, contentType.indexOf("/")).toLowerCase();
 		if (contenttype.toLowerCase().equals(new String("image"))) {
 			ImageFile imageFile = new ImageFile(blobkey);
 			String oriFilename = imageFile.getFileName();
@@ -74,6 +81,36 @@ public class Ctrl {
 			audioFile.setIsShared(isShared);
 			
 			audioFile.Update();
+		}
+		else if (contenttype.toLowerCase().equals(new String("video"))) {
+			VideoFile videoFile = new VideoFile(blobkey);
+			String oriFilename = videoFile.getFileName();
+			String extFilename = oriFilename.substring(oriFilename.indexOf("."), oriFilename.length());
+			videoFile.setFileName(filename + extFilename);
+			videoFile.setDesc(desc);
+			videoFile.setIsShared(isShared);
+			
+			videoFile.Update();
+		}
+		else if (contenttype.toLowerCase().equals(new String("text"))) {
+			TextFile textFile = new TextFile(blobkey);
+			String oriFilename = textFile.getFileName();
+			String extFilename = oriFilename.substring(oriFilename.indexOf("."), oriFilename.length());
+			textFile.setFileName(filename + extFilename);
+			textFile.setDesc(desc);
+			textFile.setIsShared(isShared);
+			
+			textFile.Update();
+		}
+		else if(contentType.toLowerCase().equals(new String("application/zip"))) {
+			ZipFile zipFile = new ZipFile(blobkey);
+			String oriFilename = zipFile.getFileName();
+			String extFilename = oriFilename.substring(oriFilename.indexOf("."), oriFilename.length());
+			zipFile.setFileName(filename + extFilename);
+			zipFile.setDesc(desc);
+			zipFile.setIsShared(isShared);
+			
+			zipFile.Update();
 		}
 	}
 }

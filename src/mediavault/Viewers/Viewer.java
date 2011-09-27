@@ -42,7 +42,8 @@ public class Viewer {
 									new String("video")))
 					|| (fileType.equals(new String("5")) && contentType
 							.substring(0, contentType.indexOf("/")).equals(
-									new String("text")))) {
+									new String("text")))
+					|| (fileType.equals(new String("6")) && contentType.toLowerCase().equals(new String("application/zip")))) {
 				if (curUser.getEmail().equals(owner.getEmail()) || isShared)
 					entities.add(result);
 			}
@@ -66,28 +67,31 @@ public class Viewer {
 			String contentType = (String) entity.getProperty("contenttype");
 
 			output += "<tr><td class=\"spec\"><a href=\"/serve?blob_key="
-					+ blobKey.getKeyString() + "\">" + fileName2 + "</a></td>";
-			output += "<td class=\"spec\">" + createdDate.toString() + "</td>";
-			output += "<td class=\"spec\">" + contentType + "</td>";
-			output += "<td class=\"spec\">" + ConvertFilesize(fileSize) + "</td>";
+					+ blobKey.getKeyString() + "\">" + fileName2 + "</a></td>\n";
+			output += "<td class=\"spec\">" + createdDate.toString() + "</td>\n";
+			output += "<td class=\"spec\">" + contentType + "</td>\n";
+			output += "<td class=\"spec\">" + ConvertFilesize(fileSize) + "</td>\n";
 			output += "<td class=\"spec\">" + user.getNickname();
 
-			output += "</td>";
+			output += "</td>\n";
 			if (entity.getProperty("desc") == null)
-				output += "<td class=\"spec\"></td>";
-			else
-				output += "<td class=\"spec\">" + entity.getProperty("desc")
-						+ "</td>";
-
+				output += "<td class=\"spec\">&nbsp;</td>\n";
+			else {
+				if (((String)entity.getProperty("desc")).equals(new String(""))) 
+					output += "<td class=\"spec\">&nbsp;</td>\n";
+				else
+					output += "<td class=\"spec\">" + entity.getProperty("desc")
+						+ "</td>\n";
+			}
 			output += "<td class=\"spec\"><a href=\"/download?blob_key="
-					+ blobKey.getKeyString() + "\">download</a></td>";
+					+ blobKey.getKeyString() + "\">download</a></td>\n";
 			if (curUser.getEmail().equals(user.getEmail())) {
 				output += "<td class=\"spec\"><a href=\"/delete?blob_key="
-						+ blobKey.getKeyString() + "\">delete</a></td>";
+						+ blobKey.getKeyString() + "\">delete</a></td>\n";
 				output += "<td class=\"spec\"><a href=\"/edit.jsp?blob_key="
-						+ blobKey.getKeyString() + "&contenttype=" + contentType + "\">edit</a></td>";
+						+ blobKey.getKeyString() + "&contenttype=" + contentType + "\">edit</a></td>\n";
 			} else {
-				output += "<td class=\"spec\"></td><td class=\"spec\"></td>";
+				output += "<td class=\"spec\">&nbsp;</td><td class=\"spec\">&nbsp;</td>";
 			}
 			output += "</tr>";
 		}
