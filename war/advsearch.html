@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>File Search</title>
+<link href="liststyle.css" rel="Stylesheet" type="text/css" />
+</head>
+<body>
+<form id="search" action="advsearch.jsp" method="post" target="main">
+Search: 
+<input type="text" name="searchContent"> <input type="checkbox" name="chkdesc" value="true">include description<br />
+Artist<input type="checkbox" name="chkartist" value="true">&nbsp;
+Album<input type="checkbox" name="chkalbum" value="true">&nbsp;
+Genre<input type="checkbox" name="chkgenre" value="true">&nbsp;<br />
+<input type="radio" name="rtype" value="all">All types&nbsp;
+<input type="radio" name="rtype" value="audio">Audio Files Only&nbsp;
+<input type="radio" name="rtype" value="image">Image Files Only&nbsp;
+<input type="radio" name="rtype" value="video">Video Files Only&nbsp;
+<input type="radio" name="rtype" value="text">Text Files Only&nbsp;
+<input type="radio" name="rtype" value="zip">Zip Files Only<br />
+
+
+</form>
+</body>
+</html>
