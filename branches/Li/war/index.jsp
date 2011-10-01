@@ -117,7 +117,7 @@ td {
 									<td>
 										<input type="text" name="searchName">
 										<input type="submit" value="Search">
-										<a href="advsearch.jsp" target="main">Advanced Search</a>
+										<a href="advsearch.html" target="main">Advanced Search</a>
 									</td>
 								</tr>
 								</form>
