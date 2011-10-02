@@ -148,4 +148,86 @@ public class Viewer {
 	public static String OutPutShared(Boolean isShared) {
 		return (isShared ? "Checked" : "");
 	}
+	
+	public static String AdvSearch(String searchContent, Boolean isDesc, Boolean isArtist, Boolean isAlbum,
+			Boolean isGenre, Date startDate, Date endDate) {
+		
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
+
+		UserService userService = UserServiceFactory.getUserService();
+		User curUser = userService.getCurrentUser();
+		Query q = new Query("fileinfo", fileKey);
+
+		PreparedQuery pq = datastore.prepare(q);
+
+		List<Entity> entities = new ArrayList<Entity>();
+		for (Entity result : pq.asIterable()) {
+			String filename = (String) result.getProperty("filename");
+			filename = filename.substring(0, filename.lastIndexOf("."))
+					.toLowerCase();
+			User owner = (User) result.getProperty("owner");
+			Boolean isShared = (result.getProperty("shared") == null ? false
+					: (Boolean) result.getProperty("shared"));
+			
+			Boolean isAdd = false;
+
+			if (curUser.getEmail().equals(owner.getEmail()) || isShared) {
+				if (filename.indexOf(searchContent.toLowerCase()) >= 0) {
+					isAdd = true;
+				}
+				if (isDesc) {
+					String desc = (result.getProperty("desc") == null ? "" : (String) result.getProperty("desc"));
+					if (desc.toLowerCase().indexOf(searchContent.toLowerCase()) >= 0) {
+						isAdd = true;
+					}
+				}
+				if (isArtist) {
+					String artist = (result.getProperty("artist") == null ? "" : (String) result.getProperty("artist"));
+					if (artist.toLowerCase().indexOf(searchContent.toLowerCase()) >= 0) {
+						isAdd = true;
+					}
+				}
+				if (isAlbum) {
+					String album = (result.getProperty("album") == null ? "" : (String) result.getProperty("album"));
+					if (album.toLowerCase().indexOf(searchContent.toLowerCase()) >= 0) {
+						isAdd = true;
+					}
+				}
+				if (isGenre) {
+					String genre = (result.getProperty("genre") == null ? "" : (String) result.getProperty("genre"));
+					if (genre.toLowerCase().indexOf(searchContent.toLowerCase()) >= 0) {
+						isAdd = true;
+					}
+				}
+				if (startDate != null || endDate != null) {
+					Date date = (Date) result.getProperty("date");
+					if (startDate == null) {
+						if (date.after(endDate)) {
+							isAdd = false;
+						}
+					}
+					if (endDate == null) {
+						if (date.before(startDate)) {
+							isAdd = false;
+						}
+					}
+					if (startDate != null && endDate != null) {
+						if (date.after(endDate) || date.before(startDate)) {
+							System.out.println("bbb");
+							isAdd = false;
+						}
+					}
+				}
+			}
+
+			if (isAdd) {
+				entities.add(result);
+			}
+		}
+		String output = OutPutEntities(entities, curUser);
+		
+		return output;
+	}
 }
