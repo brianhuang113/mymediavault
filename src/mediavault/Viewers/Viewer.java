@@ -150,7 +150,7 @@ public class Viewer {
 	}
 	
 	public static String AdvSearch(String searchContent, Boolean isDesc, Boolean isArtist, Boolean isAlbum,
-			Boolean isGenre, Date startDate, Date endDate) {
+			Boolean isGenre, String rType, Date startDate, Date endDate) {
 		
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
@@ -168,6 +168,8 @@ public class Viewer {
 			filename = filename.substring(0, filename.lastIndexOf("."))
 					.toLowerCase();
 			User owner = (User) result.getProperty("owner");
+			String content = (String)result.getProperty("contenttype");
+			content = content.substring(0, content.indexOf("/")).toLowerCase();
 			Boolean isShared = (result.getProperty("shared") == null ? false
 					: (Boolean) result.getProperty("shared"));
 			
@@ -178,24 +180,28 @@ public class Viewer {
 					isAdd = true;
 				}
 				if (isDesc) {
+					isAdd = false;
 					String desc = (result.getProperty("desc") == null ? "" : (String) result.getProperty("desc"));
 					if (desc.toLowerCase().indexOf(searchContent.toLowerCase()) >= 0) {
 						isAdd = true;
 					}
 				}
 				if (isArtist) {
+					isAdd = false;
 					String artist = (result.getProperty("artist") == null ? "" : (String) result.getProperty("artist"));
 					if (artist.toLowerCase().indexOf(searchContent.toLowerCase()) >= 0) {
 						isAdd = true;
 					}
 				}
 				if (isAlbum) {
+					isAdd = false;
 					String album = (result.getProperty("album") == null ? "" : (String) result.getProperty("album"));
 					if (album.toLowerCase().indexOf(searchContent.toLowerCase()) >= 0) {
 						isAdd = true;
 					}
 				}
 				if (isGenre) {
+					isAdd = false;
 					String genre = (result.getProperty("genre") == null ? "" : (String) result.getProperty("genre"));
 					if (genre.toLowerCase().indexOf(searchContent.toLowerCase()) >= 0) {
 						isAdd = true;
@@ -218,6 +224,46 @@ public class Viewer {
 							System.out.println("bbb");
 							isAdd = false;
 						}
+					}
+				}
+				if (rType.equals(new String("image"))) {
+					if (content.equals(new String("image"))) {
+						isAdd = true;
+					}
+					else {
+						isAdd = false;
+					}
+				}
+				if (rType.equals(new String("audio"))) {
+					if (content.equals(new String("audio"))) {
+						isAdd = true;
+					}
+					else {
+						isAdd = false;
+					}
+				}
+				if (rType.equals(new String("video"))) {
+					if (content.equals(new String("video"))) {
+						isAdd = true;
+					}
+					else {
+						isAdd = false;
+					}
+				}
+				if (rType.equals(new String("text"))) {
+					if (content.equals(new String("text"))) {
+						isAdd = true;
+					}
+					else {
+						isAdd = false;
+					}
+				}
+				if (rType.equals(new String("zip"))) {
+					if (((String)result.getProperty("contenttype")).toLowerCase().equals(new String("image"))) {
+						isAdd = true;
+					}
+					else {
+						isAdd = false;
 					}
 				}
 			}

@@ -25,6 +25,7 @@
 			Boolean isArtist = Boolean.parseBoolean(request.getParameter("chkartist"));
 			Boolean isAlbum = Boolean.parseBoolean(request.getParameter("chkalbum"));
 			Boolean isGenre = Boolean.parseBoolean(request.getParameter("chkgenre"));
+			String rType = request.getParameter("rtype");
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 			Date startDate = null, endDate = null;
 			try {
@@ -33,7 +34,7 @@
 			} catch (Exception e)
 			{}
 			
-			out.print(Viewer.AdvSearch(searchContent, isDesc, isArtist, isAlbum, isGenre, startDate, endDate));
+			out.print(Viewer.AdvSearch(searchContent, isDesc, isArtist, isAlbum, isGenre, rType, startDate, endDate));
 		%>
 	</table>
 </body>
