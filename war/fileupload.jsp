@@ -12,6 +12,7 @@
 
 <html>
 <head>
+<link href="plupload/jquery.plupload.queue.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
 <script type="text/javascript"> 
    
@@ -35,7 +36,7 @@ $("#fileform").submit(function() {
 <title>Upload file</title>
 </head>
 <body>
-	<form id="fileform" action="<%=blobstoreService.createUploadUrl("/upload")%>"
+<form id="fileform" action="<%=blobstoreService.createUploadUrl("/upload")%>"
 		method="post" enctype="multipart/form-data">
 		<input type="file"
 			name="myFile"> <br />

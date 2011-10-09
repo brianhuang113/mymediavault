@@ -15,6 +15,17 @@ td {
 <title>Media Vault</title>
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <link href="style.css" rel="Stylesheet" type="text/css" />
+<link href="jquery.autocomplete.css" rel="Stylesheet" type="text/css" />
+<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="jquery.autocomplete.pack.js"></script>
+<script type="text/javascript">
+	$().ready(function () {
+    	$("#searchName").autocomplete("/autosearch", {
+        	width: 250,
+            selectFirst: true
+      	});
+    });
+</script>
 <script type="text/javascript">
 	//Copyright 2006-2007 javascript-array.com
 
@@ -115,7 +126,7 @@ td {
 										<div style="clear: both"></div>
 									</td>
 									<td>
-										<input type="text" name="searchName">
+										<input type="text" name="searchName" id="searchName">
 										<input type="submit" value="Search">
 										<a href="advsearch.html" target="main">Advanced Search</a>
 									</td>

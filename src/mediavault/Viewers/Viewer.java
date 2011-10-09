@@ -48,7 +48,6 @@ public class Viewer {
 					entities.add(result);
 			}
 		}
-
 		String output = OutPutEntities(entities, curUser);
 
 		return output;
@@ -142,6 +141,34 @@ public class Viewer {
 		}
 		String output = OutPutEntities(entities, curUser);
 
+		return output;
+	}
+	
+	public static String AutoSearch(String qs) {
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
+
+		UserService userService = UserServiceFactory.getUserService();
+		User curUser = userService.getCurrentUser();
+		Query q = new Query("fileinfo", fileKey);
+
+		PreparedQuery pq = datastore.prepare(q);
+		String output = "";
+		for (Entity result : pq.asIterable()) {
+			String filename = (String) result.getProperty("filename");
+			filename = filename.substring(0, filename.lastIndexOf("."))
+					.toLowerCase();
+			User owner = (User) result.getProperty("owner");
+			Boolean isShared = (result.getProperty("shared") == null ? false
+					: (Boolean) result.getProperty("shared"));
+
+			if (filename.indexOf(qs.toLowerCase()) >= 0) {
+
+				if (curUser.getEmail().equals(owner.getEmail()) || isShared)
+					output += filename + "\n";
+			}
+		}
 		return output;
 	}
 	
