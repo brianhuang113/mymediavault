@@ -2,6 +2,7 @@ package mediavault.Viewers;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import com.google.appengine.api.blobstore.*;
@@ -13,7 +14,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 public class Viewer {
 
 	public static String ListAllFiles(String fileType) {
-		DatastoreService datastore = DatastoreServiceFactory
+		/*DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 		Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
 
@@ -48,7 +49,15 @@ public class Viewer {
 					entities.add(result);
 			}
 		}
-		String output = OutPutEntities(entities, curUser);
+		String output = OutPutEntities(entities, curUser);*/
+
+		String output = "";
+		BlobInfoFactory blobinfofactory = new BlobInfoFactory();
+		Iterator<BlobInfo> b = blobinfofactory.queryBlobInfos();
+		while (b.hasNext()) {
+			BlobInfo bb = b.next();
+			output += bb.getFilename() + "<br />";
+		}
 
 		return output;
 	}
@@ -178,6 +187,9 @@ public class Viewer {
 	
 	public static String AdvSearch(String searchContent, Boolean isDesc, Boolean isArtist, Boolean isAlbum,
 			Boolean isGenre, String rType, Date startDate, Date endDate) {
+		if (endDate != null) {
+			endDate.setTime(endDate.getTime() + 24*60*60*1000);
+		}
 		
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
@@ -248,7 +260,6 @@ public class Viewer {
 					}
 					if (startDate != null && endDate != null) {
 						if (date.after(endDate) || date.before(startDate)) {
-							System.out.println("bbb");
 							isAdd = false;
 						}
 					}
