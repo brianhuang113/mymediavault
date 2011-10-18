@@ -30,6 +30,9 @@
 			Date startDate = null, endDate = null;
 			try {
 				startDate = dateFormat.parse(request.getParameter("startdate"));
+			} catch (Exception e)
+			{}
+			try {
 				endDate = dateFormat.parse(request.getParameter("enddate"));
 			} catch (Exception e)
 			{}

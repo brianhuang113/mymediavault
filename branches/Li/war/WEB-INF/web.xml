@@ -30,6 +30,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   	<servlet-name>AutoSearch</servlet-name>
   	<servlet-class>mediavault.Viewers.AutoSearch</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>GenerateUploadURL</servlet-name>
+  	<servlet-class>mediavault.Viewers.GenerateUploadURL</servlet-class>
+  </servlet>
  
   <servlet-mapping>
     <servlet-name>Upload</servlet-name>
@@ -56,6 +60,10 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <servlet-mapping>
   	<servlet-name>AutoSearch</servlet-name>
   	<url-pattern>/autosearch</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>GenerateUploadURL</servlet-name>
+  	<url-pattern>/generateUploadURL</url-pattern>
   </servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

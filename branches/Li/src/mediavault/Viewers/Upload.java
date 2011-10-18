@@ -3,6 +3,7 @@ package mediavault.Viewers;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +37,14 @@ public class Upload extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
+		//System.out.println(req.getpa.getQueryString());
+		//Map<String, BlobKey> blobs = blobstoreService.getUploadedBlobs(req);
+		//System.out.println(blobs.size());
+		System.out.println("aaaaa");
+		//BlobKey blobKey = blobs.get("name");
+		//System.out.println(blobKey.getKeyString());
 
-		try {
+		/*try {
 			UserService userService = UserServiceFactory.getUserService();
 			User user = userService.getCurrentUser();
 
@@ -73,6 +80,6 @@ public class Upload extends HttpServlet {
 			
 		} catch (Exception ex) {
 			res.sendRedirect("/msg.jsp?msg=Upload failed:" + ex.getMessage());
-		}
+		}*/
 	}
 }
