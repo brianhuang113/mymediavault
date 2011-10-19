@@ -2,7 +2,6 @@ package mediavault.Viewers;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import com.google.appengine.api.blobstore.*;
@@ -14,7 +13,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 public class Viewer {
 
 	public static String ListAllFiles(String fileType) {
-		/*DatastoreService datastore = DatastoreServiceFactory
+		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 		Key fileKey = KeyFactory.createKey("fileKey", "fileKey");
 
@@ -49,15 +48,7 @@ public class Viewer {
 					entities.add(result);
 			}
 		}
-		String output = OutPutEntities(entities, curUser);*/
-
-		String output = "";
-		BlobInfoFactory blobinfofactory = new BlobInfoFactory();
-		Iterator<BlobInfo> b = blobinfofactory.queryBlobInfos();
-		while (b.hasNext()) {
-			BlobInfo bb = b.next();
-			output += bb.getFilename() + "<br />";
-		}
+		String output = OutPutEntities(entities, curUser);
 
 		return output;
 	}
@@ -74,7 +65,9 @@ public class Viewer {
 					.toString());
 			String contentType = (String) entity.getProperty("contenttype");
 
-			output += "<tr><td class=\"spec\"><a href=\"/serve?blob_key="
+			output += "<tr><td class=\"spec\"><input type=\"checkbox\" name=\"mdow\" value=\"" +
+						blobKey.getKeyString() + "\"></td>\n";
+			output += "<td class=\"spec\"><a href=\"/serve?blob_key="
 					+ blobKey.getKeyString() + "\">" + fileName2 + "</a></td>\n";
 			output += "<td class=\"spec\">" + createdDate.toString() + "</td>\n";
 			output += "<td class=\"spec\">" + contentType + "</td>\n";
@@ -100,6 +93,9 @@ public class Viewer {
 						+ blobKey.getKeyString() + "&contenttype=" + contentType + "\">edit</a></td>\n";
 			} else {
 				output += "<td class=\"spec\">&nbsp;</td><td class=\"spec\">&nbsp;</td>";
+			}
+			if (contentType.substring(0, contentType.indexOf("/")).equals(new String("video"))) {
+				output += "<td class=\"spec\"><button type=\"button\" onclick=\"$f().addClip({url: 'KimAronson-TwentySeconds75235.flv', title: '" + fileName2 + "'}, 0)\">Add</button></td>";
 			}
 			output += "</tr>";
 		}

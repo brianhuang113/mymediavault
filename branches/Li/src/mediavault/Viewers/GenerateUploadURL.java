@@ -19,8 +19,7 @@ public class GenerateUploadURL extends HttpServlet {
 			throws IOException {
 		res.setContentType("text/plain");
 		PrintWriter pw = res.getWriter();
-		String s = blobstoreService.createUploadUrl("/upload");
-		pw.write(blobstoreService.createUploadUrl("/upload"));
+		pw.write(blobstoreService.createUploadUrl("/multiupload"));
 		pw.flush();
 		pw.close();
 	}
