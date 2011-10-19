@@ -22,7 +22,14 @@
         runtimes: 'html5,flash',
                                 use_query_string: false,
                                 multipart: true,
-                                flash_swf_url: 'plupload/plupload.flash.swf'
+                                flash_swf_url: 'plupload/plupload.flash.swf',
+                                filters : [
+            {title : "Image files", extensions : "jpg,gif,png,jpeg,bmp"},
+            {title : "Zip files", extensions : "zip"},
+            {title : "Audio files", extensions : "wav,mp3,mid"},
+            {title : "Video files", extensions : "rm,rmvb,mkv,avi,mp4,mpg,swf,mov,wmv"},
+            {title : "Text files", extensions : "txt"}
+        ]
       }).pluploadQueue();
     	  
     	  uploader.bind('UploadFile', function(up, file) {
@@ -35,6 +42,7 @@
     	            }
     	        });
     	      });
+    	  
       
     });
   </script>
