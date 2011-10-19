@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>File Search</title>
+<link href="liststyle.css" rel="Stylesheet" type="text/css" />
+<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="jquery-ui-1.8.16.custom.min.js"></script>
+<link href="jquery-ui-1.8.16.custom.css" rel="Stylesheet" type="text/css" />
+<script type="text/javascript">
+$(function() {
+	$("#startdate").datepicker({ dateFormat: 'dd/mm/yy' });
+	$("#enddate").datepicker({ dateFormat: 'dd/mm/yy' });
+});
+</script>
+</head>
+<body>
+<form id="search" action="advsearch.jsp" method="post" target="main">
+Search: 
+<input type="text" name="searchContent"><input type="submit" value="Search"><br />
+<input type="checkbox" name="chkdesc" value="true">include description<br />
+<input type="checkbox" name="chkartist" value="true">Artist&nbsp;
+<input type="checkbox" name="chkalbum" value="true">Album&nbsp;
+<input type="checkbox" name="chkgenre" value="true">Genre&nbsp;<br />
+<input type="radio" name="rtype" value="all" checked>All types&nbsp;
+<input type="radio" name="rtype" value="audio">Audio Files Only&nbsp;
+<input type="radio" name="rtype" value="image">Image Files Only&nbsp;
+<input type="radio" name="rtype" value="video">Video Files Only&nbsp;
+<input type="radio" name="rtype" value="text">Text Files Only&nbsp;
+<input type="radio" name="rtype" value="zip">Zip Files Only<br />
+Search by date<br />
+from: <input type="text" name="startdate" id="startdate"> to: <input type="text" name="enddate" id="enddate">
+
+</form>
+</body>
+</html>
