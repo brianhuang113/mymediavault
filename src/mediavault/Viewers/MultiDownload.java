@@ -32,7 +32,13 @@ public class MultiDownload extends HttpServlet {
 				BlobInfoFactory blobinfofactory = new BlobInfoFactory();
 				BlobInfo blobinfo = blobinfofactory.loadBlobInfo(blobkey);
 				zipFile.putNextEntry(new ZipEntry(blobinfo.getFilename()));
-				zipFile.write(blobstoreService.fetchData(blobkey, 0, blobinfo.getSize()));
+				long startIndex = 0;
+				long endIndex = BlobstoreService.MAX_BLOB_FETCH_SIZE > blobinfo.getSize() ? blobinfo.getSize() : BlobstoreService.MAX_BLOB_FETCH_SIZE - 1;
+				do {
+					zipFile.write(blobstoreService.fetchData(blobkey, startIndex, endIndex));
+					startIndex = endIndex + 1;
+					endIndex = endIndex + BlobstoreService.MAX_BLOB_FETCH_SIZE  > blobinfo.getSize() ? blobinfo.getSize() : endIndex + BlobstoreService.MAX_BLOB_FETCH_SIZE - 1;
+				} while (endIndex < blobinfo.getSize());
 				zipFile.closeEntry();
 			}
 			zipFile.close();
