@@ -58,4 +58,23 @@
     background: #f5fafa url(images/bullet2.gif) no-repeat; 
     font: bold 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; 
     color: #797268; 
-} 
+}
+
+#player {
+	width:465px;
+	height:330px;
+	float:left;
+	margin:0 0 40px 20px;
+	z-index: -999;
+}
+
+#playlist {
+    height: 370px;
+    width: 300px;
+    overflow: auto;
+    float: left;
+    font-size: 11pt;
+}
+.playlist_active {
+	background-color: #ffcc00;
+}
