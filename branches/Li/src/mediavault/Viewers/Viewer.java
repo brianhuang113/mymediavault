@@ -95,7 +95,10 @@ public class Viewer {
 				output += "<td class=\"spec\">&nbsp;</td><td class=\"spec\">&nbsp;</td>";
 			}
 			if (contentType.substring(0, contentType.indexOf("/")).equals(new String("video"))) {
-				output += "<td class=\"spec\"><button type=\"button\" onclick=\"$f().addClip({url: 'KimAronson-TwentySeconds75235.flv', title: '" + fileName2 + "'}, 0)\">Add</button></td>";
+				output += "<td class=\"spec\"><button type=\"button\" onClick=\"addEntry('http://localhost:8888/serve?blob_key=" + 
+						blobKey.getKeyString() + "', '" + fileName2 + "')\">Add</button></td>";
+			} else {
+				output += "<td class=\"spec\"></td>";
 			}
 			output += "</tr>";
 		}

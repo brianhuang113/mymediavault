@@ -20,6 +20,7 @@
     $(function() {
       var uploader = $("#uploader").pluploadQueue({
         runtimes: 'html5,flash',
+        url: '<%=blobstoreService.createUploadUrl("/upload")%>',
                                 use_query_string: false,
                                 multipart: true,
                                 flash_swf_url: 'plupload/plupload.flash.swf',
