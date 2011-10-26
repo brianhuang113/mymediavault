@@ -94,12 +94,13 @@ public class Viewer {
 			} else {
 				output += "<td class=\"spec\">&nbsp;</td><td class=\"spec\">&nbsp;</td>";
 			}
-			if (contentType.substring(0, contentType.indexOf("/")).equals(new String("video"))) {
-				output += "<td class=\"spec\"><button type=\"button\" onClick=\"addEntry('http://localhost:8888/serve?blob_key=" + 
-						blobKey.getKeyString() + "', '" + fileName2 + "')\">Add</button></td>";
-			} else {
-				output += "<td class=\"spec\"></td>";
-			}
+				if (contentType.substring(0, contentType.indexOf("/")).toLowerCase().equals(new String("audio")) ||
+						contentType.substring(0, contentType.indexOf("/")).toLowerCase().equals(new String("video"))) {
+					output += "<td class=\"spec\"><a href=\"/play.jsp?blob_key=" + 
+							blobKey.getKeyString() + "\">Play</a></td>";
+				} else {
+					output += "<td class=\"spec\">&nbsp;</td>";
+				}
 			output += "</tr>";
 		}
 

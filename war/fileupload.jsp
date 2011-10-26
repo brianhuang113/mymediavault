@@ -23,7 +23,7 @@ $("#fileform").submit(function() {
         var ext=filepath.substring(extStart,filepath.length).toUpperCase(); 
         if(ext!=".MP3"&&ext!=".WAV"&&ext!=".BMP"&&ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG"
         		&&ext!=".MID"&&ext!=".AVI"&&ext!=".MP4"&&ext!=".MPG"&&ext!=".MKV"&&ext!=".RMVB"
-        		&&ext!=".RM"&&ext!=".SWF"&&ext!=".MOV"&&ext!=".WMV"&&ext!=".TXT"
+        		&&ext!=".RM"&&ext!=".SWF"&&ext!=".MOV"&&ext!=".WMV"&&ext!=".TXT"&&ext!=".FLV"
         		&&ext!=".ZIP"){ 
         alert("invalid file type!"); 
         return false; 

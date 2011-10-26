@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
@@ -19,6 +21,10 @@ public class Serve extends HttpServlet {
 			throws IOException {
 		BlobKey blobKey = new BlobKey(req.getParameter("blob_key"));
 		
+		BlobInfoFactory blobinfofactory = new BlobInfoFactory();
+		BlobInfo blobinfo = blobinfofactory.loadBlobInfo(blobKey);
+		res.setContentType(blobinfo.getContentType());
+		res.setContentLength((int)blobinfo.getSize());
 		blobstoreService.serve(blobKey, res);
 	}
 }

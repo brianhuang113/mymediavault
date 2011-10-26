@@ -28,7 +28,7 @@
             {title : "Image files", extensions : "jpg,gif,png,jpeg,bmp"},
             {title : "Zip files", extensions : "zip"},
             {title : "Audio files", extensions : "wav,mp3,mid"},
-            {title : "Video files", extensions : "rm,rmvb,mkv,avi,mp4,mpg,swf,mov,wmv"},
+            {title : "Video files", extensions : "rm,rmvb,mkv,avi,mp4,mpg,swf,mov,wmv,flv"},
             {title : "Text files", extensions : "txt"}
         ]
       }).pluploadQueue();

@@ -104,17 +104,17 @@ td {
 										<ul id="sddm">
 											<li><a href="/">Home</a></li>
 											<li>
-												<a href="#" onmouseover="mopen('m5')"
-												onmouseout="mclosetime()">File Upload</a>
+												<a href="fileupload.jsp" onmouseover="mopen('m5')"
+												onmouseout="mclosetime()" target="main">File Upload</a>
 												<div id="m5" onmouseover="mcancelclosetime()"
 													onmouseout="mclosetime()">
-													<a href="fileupload.jsp" target="main">Signle File Upload</a>
+													<a href="fileupload.jsp" target="main">Single File Upload</a>
 													<a href="multiupload.jsp" target="main">Multiple Files Upload</a>
 													</div>
 												
 											</li>
-											<li><a href="#" onmouseover="mopen('m2')"
-												onmouseout="mclosetime()">File Listing</a>
+											<li><a href="listallfiles.jsp?listtype=1" onmouseover="mopen('m2')"
+												onmouseout="mclosetime()" target="main">File Listing</a>
 												<div id="m2" onmouseover="mcancelclosetime()"
 													onmouseout="mclosetime()">
 													<a href="listallfiles.jsp?listtype=1" target="main">All Files</a>
@@ -126,7 +126,7 @@ td {
 												</div>
 											</li>
 											<li><a
-												href="<%=userService.createLogoutURL(request.getRequestURI())%>">sign
+												href="<%=userService.createLogoutURL(request.getRequestURI())%>">Sign
 													out</a></li>
 										</ul>
 										<div style="clear: both"></div>
