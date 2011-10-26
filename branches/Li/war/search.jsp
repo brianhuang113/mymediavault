@@ -16,6 +16,7 @@
 			<th>Download</th>
 			<th>Delete</th>
 			<th>Edit Information</th>
+			<th>Play</th>
 		</tr>
 		<%
 			String searchName = request.getParameter("searchName");
